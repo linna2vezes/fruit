@@ -12,6 +12,7 @@ import { CardFruit, Title } from '../Styled';
 
 
 export const Card = ({name, image,price}) => {
+  
 const [ quantity, setQuantity] = useState ("0")
 const [ finalPrice, setPrice] = useState (`R$ ${price}`)
 const saveOnLS =(fruitName, object) => localStorage.setItem(fruitName, object)
@@ -33,10 +34,10 @@ const toast = useToast()
         <Flex flexDirection={'column'} margin={'10px'} gap="6px" alignItems='center'>
         <Title>{name}</Title>  R$={price}/unid.
        <Badge variant='solid' colorScheme='green'>Disponível</Badge>
-        <NumberInput defaultValue={0} width="60px"  min={1} max={20} onChange={
+       
+        <NumberInput defaultValue={0} width="80px"  min={1} max={20} onChange={
           (e) => { setQuantity(e); setPrice(e * price)}}> 
-          
-         
+                  
   <NumberInputField />
   <NumberInputStepper>
     <NumberIncrementStepper />
