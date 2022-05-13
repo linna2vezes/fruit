@@ -32,6 +32,7 @@ const Cart = ({name}) => {
          return acc } , 0 ))
     }
     creatList();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[upDateItem])
 
   useEffect (() => {
