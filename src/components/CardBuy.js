@@ -32,7 +32,7 @@ const change = (e)=> {
 return (
   
         <div>
-          <CardFruit>
+          <CardFruit >
           <Flex  flexDirection={'column'} alignItems={'center'} border={'1px solid black'} borderRadius='8px' justifyContent={'space-around'}
             padding={'5px'} margin={'10px'}  width={'200px'} height={'200px'} minWidth='max-content'> 
               <Flex flexDirection={'row'}> <Flex margin={'10px'} boxSize='120px'><img src= {image} alt=''/></Flex>

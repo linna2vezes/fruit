@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import {  Image, Modal, ModalBody, ModalCloseButton, ModalContent, 
- ModalFooter, ModalHeader, ModalOverlay , useDisclosure, Box } from "@chakra-ui/react"
+ ModalFooter, ModalHeader, ModalOverlay , useDisclosure, Box, AlertIcon, AlertTitle, AlertDescription, Alert } from "@chakra-ui/react"
 import { CardBuy } from '../components/CardBuy';
 import { Button } from '@chakra-ui/react';
-import { ContainerFruits , TitleSecond} from "../Styled";
-import { Link as ReachLink } from 'react-router-dom'
+import { ContainerFruits , Paragraf, TitleSecond, Center} from "../Styled";
+// import { Link as ReachLink } from 'react-router-dom'
 import vazio from '../image/vazio.png'
 
 
@@ -15,11 +15,12 @@ const Cart = ({name}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ finalPayment , setFinalPayment] = useState(0)
   const [ upDateItem, setupDateItem] = useState (false)
+  const [ alertVisible, setAlertVisible] = useState(false)
 
-  const clearOnLS =(key) => localStorage.clear(key)
- 
-  
-
+  const clearOnLS =(key) => { 
+    localStorage.clear(key) 
+    // alert ("compra finalizada")
+  }
 
   useEffect (() => {
   const creatList =() => {
@@ -31,20 +32,54 @@ const Cart = ({name}) => {
          return acc } , 0 ))
     }
     creatList();
-  },[upDateItem, finalPayment, listCart])
+  },[upDateItem])
 
+  useEffect (() => {
+    const creatPayment =() => {
+   
+    setFinalPayment(listCart.reduce((acc, el) => { acc += +el.finalPrice
+           return acc } , 0 ))
+      }
+      creatPayment();
+    },[finalPayment, listCart])
+    
+  
 
   
   // +el.finalPrice o mais na frente converte em numero de forma forçada
  console.log(finalPayment,listCart)
-   if (localStorage.length < 1) return <div><center> <TitleSecond>Não há compras na sua lista</TitleSecond> <Image  marginBottom="30px" height={"150px"} src= {vazio}   alt=''  /></center></div>;  
+   if (localStorage.length < 1) return <div>
+       { alertVisible? <Alert
+  status='success'
+  variant='subtle'
+  flexDirection='column'
+  alignItems='center'
+  justify='center'
+  textAlign='center'
+  height='150px'
+  
+ 
+>
+  
+  <AlertIcon boxSize='40px' mr={0} />
+  <AlertTitle mt={4} mb={1} fontSize='lg'>
+    Pagamento realizado com sucesso!
+  </AlertTitle>
+  <AlertDescription maxWidth='sm'>
+    Agradecemos a preferência!
+  </AlertDescription>
+</Alert>:""}
+
+<center> <TitleSecond>Não há compras na sua lista</TitleSecond> <Image  marginBottom="30px" height={"150px"} src= {vazio}   alt=''  /></center></div>;  
 
  return (
-        <div>
-         <center>
+  <Fragment>
+
+         
+    
          <TitleSecond pt="60px" fontsize="30px">O valor total da sua compra é de R$ {finalPayment} </TitleSecond>
          
-         <TitleSecond>Confira os itens adicionados ao seu carrinho de compras antes de finalizar o pedido:</TitleSecond>
+         <Paragraf>Confira os itens adicionados antes de finalizar o pedido:</Paragraf>
          
          <ContainerFruits>
           
@@ -57,7 +92,9 @@ const Cart = ({name}) => {
          setupDateItem={setupDateItem} />)}
          
          </ContainerFruits>
+         <Center>
          <Button colorScheme='blue' onClick={onOpen} > Finalizar Compra</Button>
+         </Center>
          
           <Modal isOpen={isOpen} onClose={onClose} size={'xs'} >
                 <ModalOverlay />
@@ -121,21 +158,26 @@ const Cart = ({name}) => {
   <img width="50px"  alt='' src="https://img.icons8.com/emoji/48/000000/credit-card-emoji.png"/>
 </Box>
                     
-              
+
                    
                     </ModalBody>
                     <ModalFooter>
-                           <Button colorScheme='green' as={ReachLink} to='/' size='md' onClick={() => {
+                    <Center>
+                           <Button colorScheme='green'  size='md' onClick={() => {
                         onClose()
                         clearOnLS (name)
+                        setAlertVisible (true) 
+
                        
-                    }}>Confirmar</Button>
+                    }}>Confirmar</Button> </Center>
+                   
+
                     </ModalFooter>
                 </ModalContent>
             </Modal>
 
-</center> 
-        </div>
+
+        </Fragment>
         
   )
 };
