@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {  Image, Modal, ModalBody, ModalCloseButton, ModalContent, 
- ModalFooter, ModalHeader, ModalOverlay , useDisclosure, Flex, ListItem, UnorderedList} from "@chakra-ui/react"
+ ModalFooter, ModalHeader, ModalOverlay , useDisclosure, Box } from "@chakra-ui/react"
 import { CardBuy } from '../components/CardBuy';
 import { Button } from '@chakra-ui/react';
 import { ContainerFruits , TitleSecond} from "../Styled";
@@ -9,12 +9,17 @@ import vazio from '../image/vazio.png'
 
 
 
-const Cart = () => {
+const Cart = ({name}) => {
   
   const [ listCart, setListCart] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ finalPayment , setFinalPayment] = useState(0)
   const [ upDateItem, setupDateItem] = useState (false)
+
+  const clearOnLS =(key) => localStorage.clear(key)
+ 
+  
+
 
   useEffect (() => {
   const creatList =() => {
@@ -28,7 +33,7 @@ const Cart = () => {
     creatList();
   },[upDateItem, finalPayment, listCart])
 
-  
+
   
   // +el.finalPrice o mais na frente converte em numero de forma forçada
  console.log(finalPayment,listCart)
@@ -57,19 +62,75 @@ const Cart = () => {
           <Modal isOpen={isOpen} onClose={onClose} size={'xs'} >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Valor total: R${finalPayment}  </ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody display={'flex'} alignItems='center' justifyContent={'space-around'} gap={5}>
-                     Escolha a forma para realizar a transição:
-                     <Flex as={UnorderedList} justifyContent='space-around' margin="0" gap="10px">
-                    <ListItem listStyleType={'none'} ><Button as={ReachLink} to='/' width={"80px"} height={"80px"} ><img width="80px"  alt='' src="https://img.icons8.com/color/60/000000/boleto-bankario.png"/></Button> </ListItem>
-                    <ListItem listStyleType={'none'} ><Button as={ReachLink} to='/' width={"80px"} height={"80px"} ><img width="80px"  alt='' src="https://img.icons8.com/external-xnimrodx-lineal-color-xnimrodx/60/000000/external-payment-bill-and-payment-method-xnimrodx-lineal-color-xnimrodx-4.png"/></Button> 
+                    <ModalHeader>Forma de pagamento </ModalHeader>
+                    <ModalHeader textAlign="center">Valor total é R${finalPayment},00 </ModalHeader>
 
-                    </ListItem>
-                </Flex>
+                    <ModalCloseButton />
+                    <ModalBody display={'flex'} alignItems='center' justifyContent={'space-around'}margin="0" gap={10}>
+                     
+                     <Box
+  as='button'
+  height='60px'
+  lineHeight='1.2'
+  transition='all 0.2s cubic-bezier(.08,.52,.52,1)'
+  border='1px'
+  px='8px'
+  borderRadius='8px'
+  fontSize='14px'
+  fontWeight='semibold'
+  bg='#f5f6f7'
+  borderColor='#ccd0d5'
+  color='#4b4f56'
+  _hover={{ bg: '#ebedf0' }}
+  _active={{
+    bg: '#dddfe2',
+    transform: 'scale(0.98)',
+    borderColor: '#bec3c9',
+  }}
+  _focus={{
+    boxShadow:
+      '0 0 1px 2px rgba(88, 144, 255, .75), 0 1px 1px rgba(0, 0, 0, .15)',
+  }}
+>
+  <img width="50px"  alt='' src="https://img.icons8.com/color/60/000000/boleto-bankario.png"/>
+</Box>
+<Box
+  as='button'
+  height='60px'
+  lineHeight='1.2'
+  transition='all 0.2s cubic-bezier(.08,.52,.52,1)'
+  border='1px'
+  px='8px'
+  borderRadius='8px'
+  fontSize='14px'
+  fontWeight='semibold'
+  bg='#f5f6f7'
+  borderColor='#ccd0d5'
+  color='#4b4f56'
+  _hover={{ bg: '#ebedf0' }}
+  _active={{
+    bg: '#dddfe2',
+    transform: 'scale(0.98)',
+    borderColor: '#bec3c9',
+  }}
+  _focus={{
+    boxShadow:
+      '0 0 1px 2px rgba(88, 144, 255, .75), 0 1px 1px rgba(0, 0, 0, .15)',
+  }}
+>
+  <img width="50px"  alt='' src="https://img.icons8.com/emoji/48/000000/credit-card-emoji.png"/>
+</Box>
+                    
+              
                    
                     </ModalBody>
-                    <ModalFooter></ModalFooter>
+                    <ModalFooter>
+                           <Button colorScheme='green' as={ReachLink} to='/' size='md' onClick={() => {
+                        onClose()
+                        clearOnLS (name)
+                       
+                    }}>Confirmar</Button>
+                    </ModalFooter>
                 </ModalContent>
             </Modal>
 

@@ -7,7 +7,9 @@ import {
     useColorModeValue,
     VisuallyHidden,
   } from '@chakra-ui/react';
-  import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+  import { FaWhatsapp, FaFacebook , FaInstagram} from 'react-icons/fa';
+  import background from '../image/background.png'
+
 
   import { ReactNode } from 'react';
   
@@ -65,8 +67,8 @@ import {
     return (
       <Box
       mt="20px"
-        bg={useColorModeValue('gray.50', 'gray.900')}
-        color={useColorModeValue('gray.700', 'gray.200')}>
+      mb="auto"
+      bgImage={`url(${background})`} bgRepeat='no-repeat' bgSize={'cover'}>
         <Container
           as={Stack}
           maxW={'6xl'}
@@ -78,15 +80,17 @@ import {
           {/* <Logo /> */}
           <Text>© 2022 NUTRI VIDA. All rights reserved</Text>
           <Stack direction={'row'} spacing={6}>
-            <SocialButton label={'Twitter'} alt="" href={'#'}>
-              <FaTwitter />
-            </SocialButton>
-            <SocialButton label={'YouTube'} alt="" href={'#'}>
-              <FaYoutube />
-            </SocialButton>
-            <SocialButton label={'Instagram'} alt="" href={'#'}>
+          <SocialButton label={'Whatsapp'} alt="" href={'#'}>
+              <FaWhatsapp />
+              </SocialButton>
+              <SocialButton label={'Instagram'} alt="" href={'#'}>
               <FaInstagram />
+              </SocialButton>
+              <SocialButton label={'Facebook'} alt="" href={'#'}>
+              <FaFacebook />
             </SocialButton>
+            
+            
           </Stack>
         </Container>
       </Box>
